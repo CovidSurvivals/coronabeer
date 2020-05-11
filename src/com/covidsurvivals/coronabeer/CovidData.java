@@ -2,7 +2,7 @@ package com.covidsurvivals.coronabeer;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
+import java.sql.Date;
 
 /*
     Business Class for Covid Data that was downloaded from Data Lake
@@ -66,7 +66,7 @@ public class CovidData {
     }
 
 
-    // GETTER - SETTER METHODS
+    // ----------------------------------- GETTER - SETTER METHODS -----------------------------------
     public Date getDate() {
         return date;
     }
