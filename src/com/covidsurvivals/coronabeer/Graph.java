@@ -88,20 +88,6 @@ public class Graph implements IGraph {
     // ----------------------------------- PUBLIC METHODS -----------------------------------
     @Override
     public Collection<CovidData> getGraphData(Collection<CovidData> allData, Map<String, String> filterMap) {
-        boolean isStateSelected = false;
-        boolean isDatesSelected = false;
-        if(filterMap.get("stateId") != null){
-            isStateSelected = true;
-        }
-        if(filterMap.get("startDate") != null && filterMap.get("endDate") != null){
-            isDatesSelected = true;
-        }
-
-//        Collection<CovidData> result = allData.stream()
-//                .filter(item -> isStateSelected == true ? item.getStateId() == Integer.parseInt(filterMap.get("stateId"))
-//                        && isDatesSelected ? item.getDate().after(Date.valueOf(filterMap.get("startDate"))) && item.getDate().before(Date.valueOf(filterMap.get("endDate"))))
-//                .collect(Collectors.toList());
-
         Collection<CovidData> result = allData.stream()
                 .filter(item -> filterMap.get("stateId") != null ? item.getStateId() == Integer.parseInt(filterMap.get("stateId")) : false)
                 .filter(item -> filterMap.get("startDate") != null && filterMap.get("endDate") != null ? item.getDate().compareTo(Date.valueOf(filterMap.get("startDate"))) >= 0 && item.getDate().compareTo(Date.valueOf(filterMap.get("endDate"))) <= 0 : false)
@@ -109,5 +95,4 @@ public class Graph implements IGraph {
 
         return result;
     }
-
 }

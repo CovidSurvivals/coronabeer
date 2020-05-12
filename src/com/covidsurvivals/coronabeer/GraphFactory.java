@@ -1,6 +1,7 @@
 package com.covidsurvivals.coronabeer;
 
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.resources.JFreeChartResources;
 
 import java.util.Collection;
 import java.util.Date;
@@ -11,8 +12,8 @@ public class GraphFactory {
     private GraphFactory(){
     }
 
-    public static Graph createGraph(Collection<CovidData> allData, Map<String, String> filterMap) {
-        Graph graph = null;
+    public static JFreeChart createGraph(Collection<CovidData> allData, Map<String, String> filterMap) {
+        JFreeChart graph = null;
         Collection<CovidData> data = new Graph().getGraphData(allData, filterMap);
         data.forEach(System.out::println);
 
@@ -22,9 +23,11 @@ public class GraphFactory {
             System.out.println("BAR");
             // TODO: BarGraph drawgraph method call
         }
-        else if(type.equals(GraphType.LINE)){
+        else if(type.equals(GraphType.LINE)) {
             System.out.println("LINE");
             // TODO: LineGraph drawgraph method call
+            LineGraph lineGraph = new LineGraph();
+            graph = lineGraph.drawGraph(data);
         }
 
         return graph;

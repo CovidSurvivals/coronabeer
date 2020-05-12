@@ -1,50 +1,43 @@
 package com.covidsurvivals.coronabeer;
 
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
-import org.jfree.ui.ApplicationFrame;
-import org.jfree.ui.RefineryUtilities;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
+import java.io.*;
+import java.sql.Date;
+import java.util.Collection;
 
-/**
- * A line with dynamically added data.
- */
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.time.Day;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
 public class LineGraph extends Graph {
 
-//    public LineGraph( String applicationTitle , String chartTitle ) {
-//        super(applicationTitle);
-//        JFreeChart lineChart = ChartFactory.createLineChart(
-//                chartTitle,
-//                "Years","Number of Schools",
-//                createDataset(),
-//                PlotOrientation.VERTICAL,
-//                true,true,false);
-//
-//        ChartPanel chartPanel = new ChartPanel( lineChart );
-//        chartPanel.setPreferredSize( new java.awt.Dimension( 560 , 367 ) );
-//        setContentPane( chartPanel );
-//    }
-//
-//    private DefaultCategoryDataset createDataset( ) {
-//        DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
-//        dataset.addValue( 15 , "schools" , "1970" );
-//        dataset.addValue( 30 , "schools" , "1980" );
-//        dataset.addValue( 60 , "schools" ,  "1990" );
-//        dataset.addValue( 120 , "schools" , "2000" );
-//        dataset.addValue( 240 , "schools" , "2010" );
-//        dataset.addValue( 300 , "schools" , "2014" );
-//        return dataset;
-//    }
-//
-//    public static void main( String[ ] args ) {
-//        LineGraph chart = new LineGraph(
-//                "School Vs Years" ,
-//                "Numer of Schools vs years");
-//
-//        chart.pack( );
-//        RefineryUtilities.centerFrameOnScreen( chart );
-//        chart.setVisible( true );
-//    }
+    public JFreeChart drawGraph(Collection<CovidData> data) {
+        TimeSeries confirmedSeries = new TimeSeries("Confirmed Cases");
+        TimeSeries deathSeries = new TimeSeries("Deaths");
+
+        for(CovidData item : data){
+            confirmedSeries.add(new Day(item.getDate()), item.getTotalCases());
+            deathSeries.add(new Day(item.getDate()), item.getTotalDeaths());
+        }
+
+        final TimeSeriesCollection line_chart_dataset = new TimeSeriesCollection( );
+        line_chart_dataset.addSeries( confirmedSeries );
+        line_chart_dataset.addSeries( deathSeries );
+
+        JFreeChart lineChartObject = ChartFactory.createXYLineChart(
+                "Total number of Confirmed Cases by Date","Date",
+                "Confirmed Cases",
+                line_chart_dataset,PlotOrientation.VERTICAL,
+                true,true,false);
+
+        return lineChartObject;
+    }
 }
