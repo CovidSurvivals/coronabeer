@@ -22,6 +22,8 @@ public class GraphFactory {
         if (type.equals(GraphType.BAR)) {
             System.out.println("BAR");
             // TODO: BarGraph drawgraph method call
+            BarGraph barGraph = new BarGraph();
+            graph = barGraph.drawGraph(data);
         }
         else if(type.equals(GraphType.LINE)) {
             System.out.println("LINE");

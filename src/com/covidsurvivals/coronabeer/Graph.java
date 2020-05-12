@@ -89,8 +89,8 @@ public class Graph implements IGraph {
     @Override
     public Collection<CovidData> getGraphData(Collection<CovidData> allData, Map<String, String> filterMap) {
         Collection<CovidData> result = allData.stream()
-                .filter(item -> filterMap.get("stateId") != null ? item.getStateId() == Integer.parseInt(filterMap.get("stateId")) : false)
-                .filter(item -> filterMap.get("startDate") != null && filterMap.get("endDate") != null ? item.getDate().compareTo(Date.valueOf(filterMap.get("startDate"))) >= 0 && item.getDate().compareTo(Date.valueOf(filterMap.get("endDate"))) <= 0 : false)
+                .filter(item -> filterMap.get("stateId") != "0" ? item.getStateId() == Integer.parseInt(filterMap.get("stateId")) : false)
+                //.filter(item -> filterMap.get("startDate") != null && filterMap.get("endDate") != null ? item.getDate().compareTo(Date.valueOf(filterMap.get("startDate"))) >= 0 && item.getDate().compareTo(Date.valueOf(filterMap.get("endDate"))) <= 0 : false)
                 .collect(Collectors.toList());
 
         return result;
