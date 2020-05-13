@@ -1,9 +1,12 @@
 package com.covidsurvivals.coronabeer;
 
+import java.awt.*;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.axis.DateAxis;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
@@ -28,6 +31,12 @@ public class LineGraph extends Graph {
                 "Date", // X-Axis Label
                 "Total Count", // Y-Axis Label
                 line_chart_dataset);
+
+        lineChart.getPlot().setBackgroundPaint( Color.WHITE );
+
+        DateAxis dateAxis = (DateAxis) lineChart.getXYPlot().getDomainAxis();
+        dateAxis.setAutoRange(true);
+        dateAxis.setDateFormatOverride(new SimpleDateFormat("MMM dd, yyyy"));
 
         return lineChart;
     }

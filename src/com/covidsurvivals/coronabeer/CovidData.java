@@ -53,6 +53,12 @@ public class CovidData {
         setTotalCases(totalCases);
     }
 
+    public CovidData(Date date, long totalCases, long totalDeaths) {
+        this.date = date;
+        this.totalCases = totalCases;
+        this.totalDeaths = totalDeaths;
+    }
+
     public CovidData(Date date, int stateId, String stateName, long totalCases, long totalDeaths) {
         this(date, stateId, stateName, totalCases);
         this.totalDeaths = totalDeaths;
