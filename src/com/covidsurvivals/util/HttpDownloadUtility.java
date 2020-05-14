@@ -5,15 +5,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Properties;
 
-/**
- * A utility that downloads a file from a URL.
+/*
+ * A utility class that downloads a csv file from a URL from config.properties file (AWS data lake file).
  */
 
 public class HttpDownloadUtility {
     private static final int BUFFER_SIZE = 4096;
     private static final String currentDir = System.getProperty("user.dir");
 
-    /**
+    /*
      * Downloads a file from a URL
      * @throws IOException
      */
@@ -44,11 +44,6 @@ public class HttpDownloadUtility {
                             fileURL.length());
                 }
 
-//                System.out.println("Content-Type = " + contentType);
-//                System.out.println("Content-Disposition = " + disposition);
-//                System.out.println("Content-Length = " + contentLength);
-//                System.out.println("fileName = " + fileName);
-
                 // opens input stream from the HTTP connection
                 InputStream inputStream = httpConn.getInputStream();
                 String saveFilePath = currentDir + File.separator + fileName;
@@ -64,8 +59,6 @@ public class HttpDownloadUtility {
 
                 outputStream.close();
                 inputStream.close();
-
-                //System.out.println("File downloaded");
             } else {
                 System.out.println("No file to download. Server replied HTTP code: " + responseCode);
             }
@@ -75,6 +68,7 @@ public class HttpDownloadUtility {
         }
     }
 
+    //Method to get values from .Properties file
     private static Properties getPropertiesValues(){
         Properties prop=new Properties();
         FileInputStream ip= null;

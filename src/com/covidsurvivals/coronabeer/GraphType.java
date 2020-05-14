@@ -1,5 +1,8 @@
 package com.covidsurvivals.coronabeer;
 
+/*
+    Enum class for GraphType
+ */
 public enum GraphType {
     BAR("Bar Graph"),
     LINE("Line Graph");

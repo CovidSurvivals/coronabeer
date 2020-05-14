@@ -1,5 +1,8 @@
 package com.covidsurvivals.coronabeer;
 
+/*
+        Enum class for States of USA
+ */
 public enum State {
         ALL("All",0),
         ALABAMA("Alabama", 1),

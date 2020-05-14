@@ -2,7 +2,7 @@ package com.covidsurvivals.coronabeer;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.sql.Date;
+import java.time.*;
 
 /*
     Business Class for Covid Data that was downloaded from Data Lake
@@ -11,7 +11,7 @@ import java.sql.Date;
 public class CovidData {
 
     // ----------------------------------- PRIVATE PROPERTIES -----------------------------------
-    private Date date;
+    private LocalDate date;
     private int stateId;
     private String stateName;
     private long totalCases;
@@ -22,7 +22,7 @@ public class CovidData {
 
     }
 
-    public CovidData(Date date) {
+    public CovidData(LocalDate date) {
         setDate(date);
     }
 
@@ -38,28 +38,28 @@ public class CovidData {
         setTotalCases(totalCases);
     }
 
-    public CovidData(Date date, int stateId) {
+    public CovidData(LocalDate date, int stateId) {
         this(date);
         setStateId(stateId);
     }
 
-    public CovidData(Date date, int stateId, String stateName) {
+    public CovidData(LocalDate date, int stateId, String stateName) {
         this(date, stateId);
         setStateName(stateName);
     }
 
-    public CovidData(Date date, int stateId, String stateName, long totalCases) {
+    public CovidData(LocalDate date, int stateId, String stateName, long totalCases) {
         this(date, stateId, stateName);
         setTotalCases(totalCases);
     }
 
-    public CovidData(Date date, long totalCases, long totalDeaths) {
+    public CovidData(LocalDate date, long totalCases, long totalDeaths) {
         this.date = date;
         this.totalCases = totalCases;
         this.totalDeaths = totalDeaths;
     }
 
-    public CovidData(Date date, int stateId, String stateName, long totalCases, long totalDeaths) {
+    public CovidData(LocalDate date, int stateId, String stateName, long totalCases, long totalDeaths) {
         this(date, stateId, stateName, totalCases);
         this.totalDeaths = totalDeaths;
     }
@@ -73,11 +73,11 @@ public class CovidData {
 
 
     // ----------------------------------- GETTER - SETTER METHODS -----------------------------------
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

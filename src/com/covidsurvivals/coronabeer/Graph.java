@@ -1,20 +1,20 @@
 package com.covidsurvivals.coronabeer;
 
+import java.time.LocalDate;
 import java.util.*;
-import java.sql.Date;
 import java.util.stream.Collectors;
 
 /*
     Business Class for Graph that take Filters from user and draw the graph
  */
 
-public class Graph implements IGraph {
+class Graph implements IGraph {
 
     // ----------------------------------- PRIVATE PROPERTIES -----------------------------------
     private GraphType graphType;
     private int stateId;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
 
     // ----------------------------------- CONSTRUCTORS -----------------------------------
@@ -35,13 +35,13 @@ public class Graph implements IGraph {
         setStateId(stateId);
     }
 
-    public Graph(GraphType graphType, Date startDate, Date endDate) {
+    public Graph(GraphType graphType, LocalDate startDate, LocalDate endDate) {
         this(graphType);
         setStartDate(startDate);
         setEndDate(endDate);
     }
 
-    public Graph(GraphType graphType, int stateId, Date startDate, Date endDate) {
+    public Graph(GraphType graphType, int stateId, LocalDate startDate, LocalDate endDate) {
         this(graphType, startDate, endDate);
         setStateId(stateId);
     }
@@ -64,19 +64,19 @@ public class Graph implements IGraph {
         this.stateId = stateId;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
@@ -90,7 +90,7 @@ public class Graph implements IGraph {
             if(filterMap.get("startDate") != null && filterMap.get("endDate") != null){
                 filteredData = allData.stream()
                         .filter(item -> item.getStateId() == Integer.parseInt(filterMap.get("stateId")))
-                        .filter(item -> item.getDate().compareTo(Date.valueOf(filterMap.get("startDate"))) >= 0 && item.getDate().compareTo(Date.valueOf(filterMap.get("endDate"))) <= 0)
+                        .filter(item -> item.getDate().compareTo(LocalDate.parse(filterMap.get("startDate"))) >= 0 && item.getDate().compareTo(LocalDate.parse(filterMap.get("endDate"))) <= 0)
                         .collect(Collectors.toList());
 
             }
@@ -103,38 +103,23 @@ public class Graph implements IGraph {
         } else {
             if(filterMap.get("startDate") != null && filterMap.get("endDate") != null){
                 filteredData = allData.stream()
-                        .filter(item -> item.getDate().compareTo(Date.valueOf(filterMap.get("startDate"))) >= 0 && item.getDate().compareTo(Date.valueOf(filterMap.get("endDate"))) <= 0)
+                        .filter(item -> item.getDate().compareTo(LocalDate.parse(filterMap.get("startDate"))) >= 0 && item.getDate().compareTo(LocalDate.parse(filterMap.get("endDate"))) <= 0)
                         .collect(Collectors.toList());
             }
         }
 
         Collection<CovidData> result = new ArrayList<>();
-        Map<Date, List<CovidData>> filteredMap = filteredData.stream()
+        Map<LocalDate, List<CovidData>> filteredMap = filteredData.stream()
                 .collect(Collectors.groupingBy(CovidData::getDate));
 
 
-        for (Date date : filteredMap.keySet()) {
-            Date caseDate = Date.valueOf(date.toString());
+        for (LocalDate date : filteredMap.keySet()) {
             long cases = filteredMap.get(date).stream().collect(Collectors.summingLong(CovidData::getTotalCases));
             long deaths = filteredMap.get(date).stream().collect(Collectors.summingLong(CovidData::getTotalDeaths));
-            CovidData item = new CovidData(caseDate,1,"State", cases, deaths);
+            CovidData item = new CovidData(date,1,"State", cases, deaths);
             result.add(item);
         }
 
         return result.stream().sorted(Comparator.comparing(CovidData::getDate)).collect(Collectors.toList());
-
-//        Stream<CovidData> stream = allData.stream();
-//        if(filterMap.get("stateId") != "0"){
-//            stream = stream.filter(item -> item.getStateId() == Integer.parseInt(filterMap.get("stateId")));
-//        }
-//        if(filterMap.get("startDate") != null && filterMap.get("endDate") != null){
-//            stream = stream.filter(item -> item.getDate().compareTo(Date.valueOf(filterMap.get("startDate"))) >= 0 && item.getDate().compareTo(Date.valueOf(filterMap.get("endDate"))) <= 0);
-//        }
-//        List<CovidData> result = stream.collect(Collectors.toList());
-
-//        List<CovidData> result = allData.stream()
-//                .filter(filterMap.get("stateId") != "0" ? item -> item.getStateId() == Integer.parseInt(filterMap.get("stateId")) : item -> true)
-//                .filter(item -> filterMap.get("startDate") != null && filterMap.get("endDate") != null ? item.getDate().compareTo(Date.valueOf(filterMap.get("startDate"))) >= 0 && item.getDate().compareTo(Date.valueOf(filterMap.get("endDate"))) <= 0 : false)
-//                .collect(Collectors.toList());
     }
 }
