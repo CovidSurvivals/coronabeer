@@ -14,12 +14,13 @@ import java.util.Collection;
  */
 
 public class ImportData {
+    private static final String currentDir = System.getProperty("user.dir") + "\\data";
 
     // Static method for import data from csv to collection
     public static Collection<CovidData> importFromCSVToCollection(){
         Collection<CovidData> covidData = new ArrayList<>();
         try {
-            BufferedReader lineReader = new BufferedReader(new FileReader(System.getProperty("user.dir") + "\\us_states.csv"));
+            BufferedReader lineReader = new BufferedReader(new FileReader(currentDir  + "\\us_states.csv"));
             String lineText = null;
 
             lineReader.readLine(); // skip header line

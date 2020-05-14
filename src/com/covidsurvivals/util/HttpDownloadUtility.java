@@ -3,6 +3,7 @@ package com.covidsurvivals.util;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.Properties;
 
 /*
@@ -11,7 +12,7 @@ import java.util.Properties;
 
 public class HttpDownloadUtility {
     private static final int BUFFER_SIZE = 4096;
-    private static final String currentDir = System.getProperty("user.dir");
+    private static final String currentDir = System.getProperty("user.dir") + "\\data";
 
     /*
      * Downloads a file from a URL
